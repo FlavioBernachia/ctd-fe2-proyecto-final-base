@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { SuscribeImage, CloseButton as Close } from "../../assets";
 import { obtenerNoticias } from "./fakeRest";
+import { capitalizeWords, formatearFecha } from "./utils";
 import {
   CloseButton,
   TarjetaModal,
@@ -40,23 +41,15 @@ const Noticias = () => {
       const respuesta = await obtenerNoticias();
 
       const data = respuesta.map((n) => {
-        const titulo = n.titulo
-          .split(" ")
-          .map((str) => {
-            return str.charAt(0).toUpperCase() + str.slice(1);
-          })
-          .join(" ");
+        const titulo = capitalizeWords(n.titulo);//Responsabilidad Única, SOLID
 
-        const ahora = new Date();
-        const minutosTranscurridos = Math.floor(
-          (ahora.getTime() - n.fecha.getTime()) / 60000
-        );
+        const fechaFormateada = formatearFecha(n.fecha);//Responsabilidad Única, SOLID
 
         return {
           id: n.id,
           titulo,
           descripcion: n.descripcion,
-          fecha: `Hace ${minutosTranscurridos} minutos`,
+          fecha: fechaFormateada, 
           esPremium: n.esPremium,
           imagen: n.imagen,
           descripcionCorta: n.descripcion.substring(0, 100),
