@@ -29,7 +29,9 @@ describe("Cita component", () => {
         );
 
         const input = screen.getByLabelText("Author Cita");
-        fireEvent.change(input, { target: { value: "Nelson" } });
+        fireEvent.change(input, {
+            target:{value:"Nelson"}
+        });
         const button = screen.getByLabelText("Obtener Cita");
         fireEvent.click(button);
 
@@ -48,7 +50,9 @@ describe("Cita component", () => {
         );
 
         const input = screen.getByLabelText("Author Cita");
-        fireEvent.change(input, { target: { value: "Homer Simpson" } });
+        fireEvent.change(input, {
+            target:{value:"Homer Simpson"}
+        });
         const button = screen.getByLabelText("Obtener Cita");
         fireEvent.click(button);
 
@@ -66,9 +70,11 @@ describe("Cita component", () => {
     </Provider>);
     
       const input = screen.getByPlaceholderText("Ingresa el nombre del autor");
-      userEvent.type(input, "123");
+      userEvent.type(input, "1234");
+
       const button = await screen.findByText("Obtener Cita");;
       fireEvent.click(button);
+
       expect(
         await screen.findByText("Por favor ingrese un nombre válido")
       ).toBeInTheDocument();
